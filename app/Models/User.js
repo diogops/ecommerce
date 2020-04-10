@@ -9,6 +9,7 @@ const Hash = use('Hash')
 class User extends Model {
   static boot () {
     super.boot()
+    
 
     /**
      * A hook to hash the user password before saving
@@ -20,6 +21,13 @@ class User extends Model {
       }
     })
   }
+
+  static get traits () {
+    return [
+      '@provider:Adonis/Acl/HasRole',
+      '@provider:Adonis/Acl/HasPermission'
+    ]
+  }  
 
   /**
    * A relationship on tokens is required for auth to
@@ -34,6 +42,7 @@ class User extends Model {
   tokens () {
     return this.hasMany('App/Models/Token')
   }
+
 }
 
 module.exports = User
